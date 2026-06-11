@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avalanche Growth — AI Implementation Consultancy</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ink:#080C14;
+  --page:#F5F6FA;
+  --white:#FFFFFF;
+  --blue:#1A3AFF;
+  --blue-mid:#2F52FF;
+  --blue-dark:#0D1FAD;
+  --blue-dim:#EEF0FF;
+  --ice:#D6DBFF;
+  --slate:#3D4663;
+  --muted:#7C82A0;
+  --dim:#A8ADBE;
+  --border:rgba(8,12,20,0.08);
+  --border-blue:rgba(26,58,255,0.18);
+  --red:#C0280A;
+}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--page);
+  color:var(--ink);
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ── TICKER ── */
+.ticker{
+  background:var(--ink);
+  color:var(--ice);
+  font-size:11px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:10px 0;overflow:hidden;white-space:nowrap;
+}
+.ticker-inner{display:inline-block;animation:tick 30s linear infinite;}
+.ticker-inner span{margin:0 44px;}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ── NAV ── */
+nav{
+  max-width:1100px;margin:0 auto;
+  padding:22px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+  font-family:'Fraunces',serif;
+  font-size:22px;font-weight:900;
+  color:var(--ink);letter-spacing:-.03em;
+}
+.logo span{color:var(--blue);}
+.nav-pill{
+  background:var(--blue);color:#fff;
+  font-size:13px;font-weight:600;
+  padding:10px 22px;border-radius:100px;
+  text-decoration:none;
+  transition:background .15s,transform .15s;
+}
+.nav-pill:hover{background:var(--blue-dark);transform:translateY(-1px);}
+
+/* ── HERO ── */
+.hero{
+  max-width:900px;margin:0 auto;
+  padding:64px 32px 56px;
+  text-align:center;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--blue-dim);border:1px solid var(--border-blue);
+  color:var(--blue);font-size:11px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 16px;border-radius:100px;margin-bottom:28px;
+}
+.live-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--blue);
+  animation:pulse .18s ease-in-out infinite alternate;
+  box-shadow:0 0 0 0 rgba(26,58,255,.5);
+  animation:glow 2s ease-in-out infinite;
+}
+@keyframes glow{
+  0%,100%{box-shadow:0 0 0 0 rgba(26,58,255,.4);}
+  50%{box-shadow:0 0 0 5px rgba(26,58,255,0);}
+}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(40px,7vw,76px);
+  font-weight:900;line-height:1.02;
+  letter-spacing:-.03em;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.hero h1 em{
+  font-style:italic;font-weight:300;
+  color:var(--blue);
+}
+.hero-sub{
+  font-size:18px;color:var(--slate);
+  max-width:560px;margin:20px auto 40px;
+  line-height:1.7;
+}
+.hero-sub strong{color:var(--ink);}
+
+/* ── HERO CTA ROW ── */
+.cta-row{
+  display:flex;align-items:center;
+  justify-content:center;gap:14px;
+  flex-wrap:wrap;margin-bottom:48px;
+}
+.btn-primary{
+  background:var(--blue);color:#fff;
+  font-size:16px;font-weight:600;
+  padding:16px 32px;border-radius:12px;
+  text-decoration:none;
+  box-shadow:0 4px 24px rgba(26,58,255,.3);
+  transition:transform .15s,box-shadow .15s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(26,58,255,.38);}
+.btn-ghost{
+  background:transparent;color:var(--ink);
+  font-size:15px;font-weight:500;
+  padding:15px 28px;border-radius:12px;
+  border:1.5px solid var(--border);
+  text-decoration:none;
+  transition:border-color .15s,color .15s;
+}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
+
+/* ── TRUST STRIP ── */
+.trust-strip{
+  display:flex;justify-content:center;
+  align-items:center;gap:32px;flex-wrap:wrap;
+  font-size:13px;color:var(--muted);
+  margin-bottom:64px;
+}
+.trust-strip span{display:flex;align-items:center;gap:6px;}
+.trust-strip strong{color:var(--ink);}
+
+/* ── HERO METRICS ── */
+.metrics{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  max-width:900px;margin:0 auto 80px;
+  padding:0 32px;
+}
+.metric-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:24px 20px;
+  text-align:center;
+}
+.metric-card .val{
+  font-family:'Fraunces',serif;
+  font-size:36px;font-weight:900;
+  color:var(--blue);
+  line-height:1;margin-bottom:6px;
+  letter-spacing:-.02em;
+}
+.metric-card .lbl{
+  font-size:12px;color:var(--muted);line-height:1.4;
+}
+@media(max-width:640px){
+  .metrics{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ── DIVIDER ── */
+hr.sec{border:none;border-top:1px solid var(--border);max-width:1100px;margin:0 auto;}
+
+/* ── SECTION WRAPPER ── */
+.section{
+  max-width:1100px;margin:0 auto;
+  padding:72px 32px;
+}
+.eyebrow{
+  font-size:10px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;
+}
+.sec-headline{
+  font-family:'Fraunces',serif;
+  font-size:clamp(26px,4vw,42px);
+  font-weight:900;line-height:1.12;
+  letter-spacing:-.025em;color:var(--ink);
+  margin-bottom:8px;
+}
+.sec-headline em{font-style:italic;font-weight:300;color:var(--blue);}
+.sec-body{
+  font-size:16px;color:var(--slate);
+  max-width:580px;line-height:1.75;margin-bottom:0;
+}
+
+/* ── PAIN SECTION ── */
+.pain-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;margin-top:32px;
+}
+@media(max-width:640px){.pain-grid{grid-template-columns:1fr;}}
+.pain-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:14px;padding:20px 18px;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.pain-icon{
+  font-size:18px;flex-shrink:0;margin-top:2px;
+  width:36px;height:36px;border-radius:8px;
+  background:var(--blue-dim);
+  display:flex;align-items:center;justify-content:center;
+}
+.pain-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.pain-body{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ── CALLOUT ── */
+.callout-block{
+  background:var(--ink);
+  border-radius:20px;
+  padding:40px 48px;
+  margin:40px 0;
+  text-align:center;
+}
+.callout-block p{
+  font-family:'Fraunces',serif;
+  font-size:clamp(18px,3vw,26px);
+  font-style:italic;font-weight:300;
+  color:var(--ice);
+  line-height:1.55;
+  max-width:640px;margin:0 auto;
+}
+.callout-block p strong{
+  font-style:normal;font-weight:700;color:#fff;
+}
+
+/* ── SERVICES ── */
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:40px;
+}
+@media(max-width:768px){.services-grid{grid-template-columns:1fr;}}
+.svc-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:32px 28px;
+  transition:border-color .2s,box-shadow .2s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.svc-card:hover{
+  border-color:var(--blue);
+  box-shadow:0 8px 32px rgba(26,58,255,.1);
+  transform:translateY(-3px);
+}
+.svc-card.featured{
+  background:var(--ink);
+  border-color:var(--blue);
+}
+.svc-card.featured .svc-num,
+.svc-card.featured .svc-title,
+.svc-card.featured .svc-desc,
+.svc-card.featured .svc-list li{color:#fff;}
+.svc-card.featured .svc-desc{color:var(--ice);}
+.svc-card.featured .svc-list li{color:var(--ice);}
+.svc-badge{
+  position:absolute;top:16px;right:16px;
+  background:var(--blue);color:#fff;
+  font-size:10px;font-weight:700;
+  padding:4px 10px;border-radius:100px;
+  letter-spacing:.06em;
+}
+.svc-num{
+  font-family:'Fraunces',serif;
+  font-size:13px;font-weight:700;
+  color:var(--blue);margin-bottom:14px;
+}
+.svc-icon{font-size:28px;margin-bottom:14px;}
+.svc-title{
+  font-size:18px;font-weight:700;
+  color:var(--ink);margin-bottom:8px;
+}
+.svc-desc{
+  font-size:13px;color:var(--muted);
+  line-height:1.7;margin-bottom:16px;
+}
+.svc-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.svc-list li{
+  font-size:12px;color:var(--slate);
+  display:flex;align-items:flex-start;gap:7px;
+}
+.svc-list li::before{
+  content:"→";color:var(--blue);
+  font-weight:700;flex-shrink:0;margin-top:1px;
+}
+
+/* ── PROCESS ── */
+.process-steps{
+  display:flex;flex-direction:column;gap:0;
+  margin-top:40px;
+  position:relative;
+}
+.process-steps::before{
+  content:'';
+  position:absolute;left:27px;top:28px;bottom:28px;
+  width:2px;background:linear-gradient(to bottom,var(--blue),var(--ice));
+  z-index:0;
+}
+.step{
+  display:flex;gap:24px;align-items:flex-start;
+  padding:20px 0;
+  position:relative;z-index:1;
+}
+.step-num{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--blue);color:#fff;
+  font-family:'Fraunces',serif;
+  font-size:20px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  box-shadow:0 0 0 4px var(--page),0 0 0 6px var(--blue-dim);
+}
+.step-content{padding-top:10px;}
+.step-title{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.step-body{font-size:14px;color:var(--muted);line-height:1.65;}
+
+/* ── RESULTS GRID ── */
+.results-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:40px;
+}
+@media(max-width:768px){.results-grid{grid-template-columns:1fr;}}
+.result-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:28px 24px;
+}
+.result-stat{
+  font-family:'Fraunces',serif;
+  font-size:44px;font-weight:900;
+  color:var(--blue);line-height:1;
+  letter-spacing:-.03em;margin-bottom:6px;
+}
+.result-label{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.result-desc{font-size:12px;color:var(--muted);line-height:1.55;}
+
+/* ── TESTIMONIALS ── */
+.testi-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:40px;
+}
+@media(max-width:768px){.testi-grid{grid-template-columns:1fr;}}
+.testi{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:16px;padding:24px 22px;
+  display:flex;flex-direction:column;
+  gap:16px;
+}
+.stars{color:#F5A623;font-size:13px;letter-spacing:1px;}
+.testi-quote{
+  font-size:14px;color:var(--slate);
+  line-height:1.7;font-style:italic;
+  flex:1;
+}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.tav{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;flex-shrink:0;
+}
+.ta-blue{background:#EEF0FF;color:var(--blue);}
+.ta-green{background:#E6F4EC;color:#2D6A4F;}
+.ta-amber{background:#FEF6E7;color:#9A6B00;}
+.ta-red{background:#FDECEA;color:#B5330A;}
+.testi-name{font-size:13px;font-weight:700;color:var(--ink);}
+.testi-role{font-size:11px;color:var(--muted);}
+
+/* ── WHO IT'S FOR ── */
+.who-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;margin-top:32px;
+}
+@media(max-width:640px){.who-grid{grid-template-columns:1fr;}}
+.who-card{
+  display:flex;align-items:center;gap:14px;
+  background:var(--white);border:1px solid var(--border);
+  border-radius:12px;padding:16px 18px;
+  font-size:14px;font-weight:500;color:var(--ink);
+}
+.who-card .icon{
+  font-size:20px;width:40px;height:40px;
+  border-radius:10px;background:var(--blue-dim);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.not-for{
+  background:var(--page);border-color:transparent;color:var(--muted);
+}
+.not-for .icon{background:#F0F0F0;}
+
+/* ── TWO-COL ── */
+.two-col{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:48px;align-items:center;
+}
+@media(max-width:768px){.two-col{grid-template-columns:1fr;}}
+
+/* ── PRICING ── */
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:40px;
+}
+@media(max-width:768px){.pricing-grid{grid-template-columns:1fr;}}
+.price-card{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:20px;padding:32px 28px;
+  position:relative;overflow:hidden;
+  transition:transform .2s,box-shadow .2s;
+}
+.price-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.07);}
+.price-card.featured{
+  background:var(--ink);
+  border-color:var(--blue);
+  box-shadow:0 8px 40px rgba(26,58,255,.25);
+}
+.price-badge{
+  position:absolute;top:0;right:24px;
+  background:var(--blue);color:#fff;
+  font-size:10px;font-weight:700;
+  padding:5px 12px;border-radius:0 0 8px 8px;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.price-tier{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.price-card.featured .price-tier{color:var(--ice);}
+.price-name{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:16px;}
+.price-card.featured .price-name,.price-card.featured .price-amount,.price-card.featured .price-period{color:#fff;}
+.price-amount{
+  font-family:'Fraunces',serif;
+  font-size:40px;font-weight:900;
+  color:var(--ink);line-height:1;
+  letter-spacing:-.02em;
+}
+.price-period{font-size:13px;color:var(--muted);margin-bottom:24px;margin-top:4px;}
+.price-card.featured .price-period{color:var(--ice);}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
+.price-features li{
+  font-size:13px;color:var(--slate);
+  display:flex;align-items:flex-start;gap:8px;
+}
+.price-card.featured .price-features li{color:var(--ice);}
+.price-features li::before{content:"✓";color:var(--blue);font-weight:700;flex-shrink:0;}
+.price-btn{
+  display:block;width:100%;
+  background:var(--blue-dim);color:var(--blue);
+  font-size:14px;font-weight:600;
+  padding:13px;border-radius:10px;
+  text-align:center;text-decoration:none;
+  transition:background .15s;
+}
+.price-btn:hover{background:var(--ice);}
+.price-card.featured .price-btn{background:var(--blue);color:#fff;}
+.price-card.featured .price-btn:hover{background:var(--blue-dark);}
+
+/* ── FAQ ── */
+.faq-list{margin-top:32px;display:flex;flex-direction:column;gap:12px;}
+details{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+details[open]{border-color:var(--blue-dim);}
+summary{
+  padding:18px 22px;
+  font-size:15px;font-weight:600;color:var(--ink);
+  cursor:pointer;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;
+}
+summary::after{
+  content:"＋";color:var(--blue);
+  font-size:18px;flex-shrink:0;
+}
+details[open] summary::after{content:"−";}
+details p{
+  padding:0 22px 18px;
+  font-size:14px;color:var(--muted);line-height:1.7;
+}
+
+/* ── FINAL CTA ── */
+.final-cta{
+  background:var(--ink);
+  padding:80px 32px;
+  text-align:center;
+}
+.final-cta .inner{max-width:680px;margin:0 auto;}
+.final-cta .big{
+  font-family:'Fraunces',serif;
+  font-size:clamp(28px,5vw,52px);
+  font-weight:900;line-height:1.08;
+  letter-spacing:-.025em;
+  color:#fff;margin-bottom:20px;
+}
+.final-cta .big em{font-style:italic;font-weight:300;color:var(--ice);}
+.final-cta .sub{
+  font-size:17px;color:var(--ice);
+  line-height:1.7;margin-bottom:36px;
+  max-width:480px;margin-left:auto;margin-right:auto;
+}
+.final-cta .sub strong{color:#fff;}
+.cta-actions{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+}
+.btn-white{
+  background:#fff;color:var(--ink);
+  font-size:16px;font-weight:700;
+  padding:16px 32px;border-radius:12px;
+  text-decoration:none;
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+  transition:transform .15s;
+}
+.btn-white:hover{transform:translateY(-2px);}
+.btn-outline-white{
+  background:transparent;color:#fff;
+  font-size:15px;font-weight:500;
+  padding:15px 28px;border-radius:12px;
+  border:1.5px solid rgba(255,255,255,.25);
+  text-decoration:none;
+  transition:border-color .15s;
+}
+.btn-outline-white:hover{border-color:rgba(255,255,255,.6);}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--ink);
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:24px 32px;
+  text-align:center;
+  font-size:12px;color:var(--muted);
+}
+footer span{color:rgba(255,255,255,.3);}
+
+/* ── UTIL ── */
+.text-blue{color:var(--blue);}
+.mt-8{margin-top:8px;}
+.mt-16{margin-top:16px;}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>🚀 AI implementation that ships in 30 days</span>
+    <span>⚡ Strategy + tools + staff training — all in one engagement</span>
+    <span>🌍 Serving international businesses across 3 continents</span>
+    <span>📈 Average 40% efficiency gain within 90 days of implementation</span>
+    <span>🚀 AI implementation that ships in 30 days</span>
+    <span>⚡ Strategy + tools + training — all in one engagement</span>
+    <span>🌍 Serving international businesses across 3 continents</span>
+    <span>📈 Average 40% efficiency gain within 90 days of implementation</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Avalanche<span>.</span></div>
+  <a href="#book" class="nav-pill">Book a Discovery Call →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">
+    <div class="live-dot"></div>
+    AI Implementation Consultancy
+  </div>
+
+  <h1>
+    Your Business,<br>
+    <em>Rebuilt</em> for the<br>
+    AI Era.
+  </h1>
+
+  <p class="hero-sub">
+    Avalanche Growth helps international businesses <strong>implement AI end-to-end</strong> — from strategy and tool selection to full deployment and staff training. Not just advice. <strong>Results.</strong>
+  </p>
+
+  <div class="cta-row">
+    <a href="#book" class="btn-primary">Book a Free Discovery Call →</a>
+    <a href="#services" class="btn-ghost">See What We Do</a>
+  </div>
+
+  <div class="trust-strip">
+    <span>✓ <strong>Strategy</strong> included</span>
+    <span>✓ <strong>Tools</strong> implemented</span>
+    <span>✓ <strong>Team trained</strong></span>
+    <span>✓ Results in <strong>30–90 days</strong></span>
+  </div>
+</div>
+
+<!-- METRICS -->
+<div class="metrics">
+  <div class="metric-card">
+    <div class="val">40%</div>
+    <div class="lbl">Average efficiency gain within 90 days</div>
+  </div>
+  <div class="metric-card">
+    <div class="val">30</div>
+    <div class="lbl">Days to first AI deployment</div>
+  </div>
+  <div class="metric-card">
+    <div class="val">3×</div>
+    <div class="lbl">Typical ROI within first year</div>
+  </div>
+  <div class="metric-card">
+    <div class="val">100%</div>
+    <div class="lbl">Full implementation — strategy to staff training</div>
+  </div>
+</div>
+
+<hr class="sec">
+
+<!-- PAIN SECTION -->
+<div class="section">
+  <p class="eyebrow">The Problem</p>
+  <div class="two-col">
+    <div>
+      <h2 class="sec-headline">Your competitors are <em>already using AI.</em> Are you?</h2>
+      <p class="sec-body mt-8">
+        Most businesses know AI matters. Very few know how to implement it without wasting money, confusing their staff, or picking the wrong tools entirely. That gap is widening every quarter.
+      </p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">😵</div>
+        <div>
+          <div class="pain-title">AI overwhelm</div>
+          <div class="pain-body">ChatGPT, Gemini, Claude, Copilot — you don't know which tools are right for your specific business.</div>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">💸</div>
+        <div>
+          <div class="pain-title">Wasted spend</div>
+          <div class="pain-body">You've paid for AI subscriptions that nobody on your team actually uses consistently.</div>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🐢</div>
+        <div>
+          <div class="pain-title">Slow adoption</div>
+          <div class="pain-body">Your team knows AI exists but hasn't changed how they work. Old habits persist.</div>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🧩</div>
+        <div>
+          <div class="pain-title">No clear strategy</div>
+          <div class="pain-body">You've had no one map out where AI actually fits in your workflows and where it doesn't.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout-block">
+    <p>"The businesses that <strong>implement AI well in 2025</strong> won't just be more efficient. They will be structurally impossible for slow-moving competitors to catch."</p>
+  </div>
+</div>
+
+<hr class="sec">
+
+<!-- SERVICES -->
+<div class="section" id="services">
+  <p class="eyebrow">What We Do</p>
+  <h2 class="sec-headline">Full implementation.<br><em>Nothing left to chance.</em></h2>
+  <p class="sec-body mt-8">We don't hand you a slide deck and disappear. Avalanche Growth stays with you from first strategy session to the day your team is running AI workflows independently.</p>
+
+  <div class="services-grid">
+    <div class="svc-card">
+      <div class="svc-num">01</div>
+      <div class="svc-icon">🗺️</div>
+      <div class="svc-title">AI Strategy & Roadmap</div>
+      <div class="svc-desc">A custom AI blueprint built around your business model, existing workflows, and competitive landscape — not a generic framework.</div>
+      <ul class="svc-list">
+        <li>Business process audit</li>
+        <li>AI opportunity mapping</li>
+        <li>Tool selection & build-vs-buy recommendation</li>
+        <li>12-month implementation roadmap</li>
+        <li>ROI projection model</li>
+      </ul>
+    </div>
+
+    <div class="svc-card featured">
+      <div class="svc-badge">Most Popular</div>
+      <div class="svc-num">02</div>
+      <div class="svc-icon">⚡</div>
+      <div class="svc-title">Full AI Implementation</div>
+      <div class="svc-desc">Strategy + tool deployment + training in one 60–90 day engagement. This is the complete package most clients choose.</div>
+      <ul class="svc-list">
+        <li>Everything in Strategy tier</li>
+        <li>Tool setup, integration & testing</li>
+        <li>Custom AI workflow automation</li>
+        <li>API integrations with existing systems</li>
+        <li>Full staff training programme</li>
+        <li>30-day post-launch support</li>
+      </ul>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-num">03</div>
+      <div class="svc-icon">🎓</div>
+      <div class="svc-title">AI Training & Enablement</div>
+      <div class="svc-desc">For businesses that have the tools but haven't made them stick. We turn your team from AI-curious into AI-fluent.</div>
+      <ul class="svc-list">
+        <li>Department-specific AI workshops</li>
+        <li>Role-based AI workflow training</li>
+        <li>Prompt engineering for your use cases</li>
+        <li>Internal AI playbook creation</li>
+        <li>Ongoing coaching & Q&A</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr class="sec">
+
+<!-- PROCESS -->
+<div class="section">
+  <p class="eyebrow">How It Works</p>
+  <div class="two-col">
+    <div>
+      <h2 class="sec-headline">From <em>confused</em> to fully implemented in 90 days.</h2>
+      <p class="sec-body mt-8">Our structured engagement model means no wasted meetings, no scope creep, and no surprises. You always know exactly what's happening and what's next.</p>
+    </div>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Discovery Call (Free)</div>
+          <div class="step-body">We learn about your business, your team, and where AI can deliver the most value fastest. No obligation.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">AI Audit & Strategy (Week 1–2)</div>
+          <div class="step-body">Deep-dive audit of your processes. We deliver a prioritised AI roadmap with projected ROI per initiative.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Tool Build & Integration (Week 3–8)</div>
+          <div class="step-body">We configure, build, and integrate the right AI tools into your existing systems. First results visible within 30 days.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Staff Training & Handover (Week 9–12)</div>
+          <div class="step-body">Department-by-department training. We leave you with a team that knows how to run and expand your AI systems independently.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">30-Day Post-Launch Support</div>
+          <div class="step-body">We stay available for 30 days after handover — troubleshooting, optimising, and making sure results are sticking.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="sec">
+
+<!-- RESULTS -->
+<div class="section">
+  <p class="eyebrow">Results</p>
+  <h2 class="sec-headline">What <em>actually changes</em> after implementation.</h2>
+  <div class="results-grid">
+    <div class="result-card">
+      <div class="result-stat">40%</div>
+      <div class="result-label">Reduction in manual processing time</div>
+      <div class="result-desc">Clients typically reclaim 15–20 hours per employee per week from repetitive tasks within the first 90 days.</div>
+    </div>
+    <div class="result-card">
+      <div class="result-stat">3×</div>
+      <div class="result-label">Faster content & proposal output</div>
+      <div class="result-desc">Sales, marketing, and operations teams produce higher-quality work in a third of the time using AI-assisted workflows.</div>
+    </div>
+    <div class="result-card">
+      <div class="result-stat">60%</div>
+      <div class="result-label">Lower cost per customer interaction</div>
+      <div class="result-desc">AI-assisted customer service and support workflows dramatically reduce cost per ticket without lowering quality.</div>
+    </div>
+    <div class="result-card">
+      <div class="result-stat">30</div>
+      <div class="result-label">Days to first measurable result</div>
+      <div class="result-desc">We prioritise quick wins in the first month so you see ROI before the full engagement is complete.</div>
+    </div>
+    <div class="result-card">
+      <div class="result-stat">100%</div>
+      <div class="result-label">Staff adoption rate (trained teams)</div>
+      <div class="result-desc">Our role-specific training approach means every team member leaves knowing exactly how AI fits into their daily job.</div>
+    </div>
+    <div class="result-card">
+      <div class="result-stat">$0</div>
+      <div class="result-label">Wasted AI spend post-engagement</div>
+      <div class="result-desc">We audit and cancel tools you don't need before we start — clients typically save $500–$3,000/month in redundant subscriptions.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="sec">
+
+<!-- TESTIMONIALS -->
+<div class="section">
+  <p class="eyebrow">Client Stories</p>
+  <h2 class="sec-headline">Don't take our word for <em>it.</em></h2>
+  <div class="testi-grid">
+    <div class="testi">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">"We had 6 different AI tools that nobody was using properly. Avalanche audited everything, cut us down to 2 tools, and built workflows our entire team now uses daily. The ROI was visible within 6 weeks."</p>
+      <div class="testi-author">
+        <div class="tav ta-blue">MR</div>
+        <div>
+          <div class="testi-name">Marcus R.</div>
+          <div class="testi-role">COO, SaaS Company — United Kingdom</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">"The staff training was the piece we'd been missing. Our team went from 'scared of AI' to using it in every meeting within 3 weeks. Avalanche knows how to make adoption actually happen."</p>
+      <div class="testi-author">
+        <div class="tav ta-green">AS</div>
+        <div>
+          <div class="testi-name">Amara S.</div>
+          <div class="testi-role">Director of Operations, Fintech — Singapore</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">"We went from 0 AI infrastructure to fully deployed, integrated, and trained in 11 weeks. The strategy they built is now the backbone of how we operate. Worth every dollar."</p>
+      <div class="testi-author">
+        <div class="tav ta-amber">JW</div>
+        <div>
+          <div class="testi-name">James W.</div>
+          <div class="testi-role">Founder, E-commerce Group — Australia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="sec">
+
+<!-- WHO IT'S FOR -->
+<div class="section">
+  <p class="eyebrow">Is This For You?</p>
+  <div class="two-col">
+    <div>
+      <h2 class="sec-headline">Built for businesses <em>serious about AI.</em></h2>
+      <p class="sec-body mt-8">We work best with companies that are ready to commit to AI transformation — not just experiment with a chatbot and call it done.</p>
+      <div class="who-grid" style="margin-top:24px;">
+        <div class="who-card"><div class="icon">🏢</div>SMEs with 10–500 employees</div>
+        <div class="who-card"><div class="icon">🚀</div>Scale-ups moving fast</div>
+        <div class="who-card"><div class="icon">🌍</div>International or remote-first teams</div>
+        <div class="who-card"><div class="icon">💼</div>Professional services firms</div>
+        <div class="who-card"><div class="icon">🛒</div>E-commerce & D2C brands</div>
+        <div class="who-card"><div class="icon">💳</div>Fintech & financial services</div>
+      </div>
+    </div>
+    <div>
+      <h2 class="sec-headline" style="font-size:24px;">Not the right fit if…</h2>
+      <p class="sec-body mt-8" style="font-size:14px;">We're selective about who we work with so we can guarantee results.</p>
+      <div class="who-grid" style="margin-top:24px;">
+        <div class="who-card not-for"><div class="icon">🚫</div>You want a one-time report with no implementation</div>
+        <div class="who-card not-for"><div class="icon">🚫</div>Your leadership isn't bought in to AI adoption</div>
+        <div class="who-card not-for"><div class="icon">🚫</div>You're expecting overnight results with no process change</div>
+        <div class="who-card not-for"><div class="icon">🚫</div>Budget under $3,000 for the full engagement</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="sec">
+
+<!-- PRICING -->
+<div class="section">
+  <p class="eyebrow">Investment</p>
+  <h2 class="sec-headline">Transparent pricing.<br><em>No surprises.</em></h2>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier">Starter</div>
+      <div class="price-name">AI Strategy Sprint</div>
+      <div class="price-amount">$3,000</div>
+      <div class="price-period">One-time · 2-week engagement</div>
+      <ul class="price-features">
+        <li>Full business process audit</li>
+        <li>AI opportunity map & prioritisation</li>
+        <li>Tool selection recommendation</li>
+        <li>12-month implementation roadmap</li>
+        <li>ROI projection model</li>
+        <li>1 strategy presentation session</li>
+      </ul>
+      <a href="#book" class="price-btn">Get Started →</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-badge">Most Popular</div>
+      <div class="price-tier">Complete</div>
+      <div class="price-name">Full Implementation</div>
+      <div class="price-amount">$9,500</div>
+      <div class="price-period">One-time · 60–90 day engagement</div>
+      <ul class="price-features">
+        <li>Everything in Strategy Sprint</li>
+        <li>Tool setup & full integration</li>
+        <li>Custom AI workflow automation</li>
+        <li>API & systems integration</li>
+        <li>Department-specific staff training</li>
+        <li>Internal AI playbook</li>
+        <li>30-day post-launch support</li>
+        <li>Monthly check-in (first 3 months)</li>
+      </ul>
+      <a href="#book" class="price-btn">Book Discovery Call →</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-tier">Enterprise</div>
+      <div class="price-name">Ongoing AI Partner</div>
+      <div class="price-amount">Custom</div>
+      <div class="price-period">Monthly retainer · Ongoing</div>
+      <ul class="price-features">
+        <li>Everything in Full Implementation</li>
+        <li>Dedicated AI consultant on-call</li>
+        <li>Monthly new AI workflow builds</li>
+        <li>Quarterly AI audit & optimisation</li>
+        <li>New tool evaluations & rollouts</li>
+        <li>Unlimited staff training sessions</li>
+        <li>Strategic AI roadmap updates</li>
+      </ul>
+      <a href="#book" class="price-btn">Contact Us →</a>
+    </div>
+  </div>
+</div>
+
+<hr class="sec">
+
+<!-- FAQ -->
+<div class="section">
+  <p class="eyebrow">Common Questions</p>
+  <h2 class="sec-headline">Answers to what you're <em>already thinking.</em></h2>
+  <div class="faq-list">
+    <details open>
+      <summary>How is Avalanche Growth different from other AI consultants?</summary>
+      <p>Most AI consultants deliver a strategy deck and leave. We stay through the entire implementation — tool setup, integration, and staff training — and don't consider the job done until your team is independently running AI workflows. We measure ourselves by your adoption rate and ROI, not by deliverable count.</p>
+    </details>
+    <details>
+      <summary>What size company do you typically work with?</summary>
+      <p>We work with international businesses from 10 to 500 employees across SaaS, fintech, e-commerce, professional services, and more. The sweet spot is companies generating $1M–$50M in revenue that are ready to systematically scale with AI.</p>
+    </details>
+    <details>
+      <summary>Do you work with specific AI tools or are you tool-agnostic?</summary>
+      <p>We are completely tool-agnostic. We recommend the right tools for your specific use case, budget, and existing tech stack — not the ones we get referral fees from. We work across the full landscape: OpenAI, Anthropic Claude, Google Gemini, Microsoft Copilot, Zapier, Make, n8n, HubSpot AI, Notion AI, and many others.</p>
+    </details>
+    <details>
+      <summary>What does the discovery call involve?</summary>
+      <p>It's a free 45-minute call where we learn about your business, your current tech stack, your team structure, and where you feel the most pain. We'll give you honest feedback on where AI can help most — and where it might not be worth the investment. No sales pressure, no pitch deck.</p>
+    </details>
+    <details>
+      <summary>How long before we see results?</summary>
+      <p>Most clients see their first measurable improvement within 30 days of starting implementation — typically in one high-impact workflow we prioritise first. Full ROI is usually visible by month 3. We build a quick-win roadmap specifically to ensure you see results before the full engagement ends.</p>
+    </details>
+    <details>
+      <summary>What if our team is resistant to AI adoption?</summary>
+      <p>This is actually the most common challenge — and the one we're best equipped to solve. Our training methodology is role-specific and practical, showing each team member exactly how AI helps them personally. Adoption resistance comes from abstract training. We make it concrete and immediately useful.</p>
+    </details>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="final-cta" id="book">
+  <div class="inner">
+    <p style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ice);margin-bottom:14px;opacity:.6;">Ready to start?</p>
+    <h2 class="big">
+      Your AI transformation<br>starts with a <em>conversation.</em>
+    </h2>
+    <p class="sub">
+      Book a free 45-minute discovery call. We'll map out exactly <strong>where AI can move the needle fastest</strong> in your business — at no cost and no obligation.
+    </p>
+    <div class="cta-actions">
+      <a href="mailto:brandapex@gmail.com" class="btn-white">Book Discovery Call →</a>
+      <a href="mailto:brandapex@gmail.com" class="btn-outline-white">Send Us a Message</a>
+    </div>
+    <p style="margin-top:20px;font-size:12px;color:rgba(255,255,255,.3);">
+      Replies within 24 hours · No spam · No obligation
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Avalanche Growth · AI Implementation Consultancy · brandapex@gmail.com</span>
+</footer>
+
+</body>
+</html>
